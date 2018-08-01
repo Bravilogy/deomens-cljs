@@ -1,0 +1,26 @@
+;; shadow-cljs configuration
+{:lein true
+
+ ;; set an nrepl port for connection to a REPL.
+ :nrepl        {:port 8777}
+
+ :builds
+ {:admin {:target     :browser
+          :output-dir "public/js/compiled"
+          :asset-path "/js/compiled"
+
+          :release {:compiler-options {:optimizations :advanced}}
+
+          :modules
+          {:admin
+           {:entries [admin.core]}}
+
+          :devtools
+          ;; before live-reloading any code call this function
+          {;; :before-load shadowy-test.core/stop
+           ;; after live-reloading finishes call this function
+           :after-load   admin.core/mount-root
+           ;; serve the public directory over http at port 8700
+           :devtools-url "http://localhost:9630"
+           :preloads     [devtools.preload]}
+          }}}
